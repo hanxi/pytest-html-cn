@@ -117,21 +117,21 @@ class HTMLReport:
         head = html.head(html.meta(charset="utf-8"), html.title(self.title), html_css)
 
         outcomes = [
-            Outcome("passed", self.passed),
-            Outcome("skipped", self.skipped),
-            Outcome("failed", self.failed),
-            Outcome("error", self.errors, label="errors"),
-            Outcome("xfailed", self.xfailed, label="expected failures"),
-            Outcome("xpassed", self.xpassed, label="unexpected passes"),
+            Outcome("passed", self.passed, label="通过"),
+            Outcome("skipped", self.skipped, label="跳过"),
+            Outcome("failed", self.failed, label="失败"),
+            Outcome("error", self.errors, label="错误"),
+            Outcome("xfailed", self.xfailed, label="预期失败"),
+            Outcome("xpassed", self.xpassed, label="预期通过"),
         ]
 
         if self.rerun is not None:
-            outcomes.append(Outcome("rerun", self.rerun))
+            outcomes.append(Outcome("重跑", self.rerun))
 
         summary = [
-            html.p(f"{numtests} tests ran in {suite_time_delta:.2f} seconds. "),
+            html.p(f"运行了 {numtests} 个检查，历时: {suite_time_delta:.2f} 秒. "),
             html.p(
-                "(Un)check the boxes to filter the results.",
+                "(取消)勾选复选框, 以便筛选测试结果",
                 class_="filter",
                 hidden="true",
             ),
@@ -144,15 +144,15 @@ class HTMLReport:
                 summary.append(", ")
 
         cells = [
-            html.th("Result", class_="sortable result initial-sort", col="result"),
-            html.th("Test", class_="sortable", col="name"),
-            html.th("Duration", class_="sortable", col="duration"),
+            html.th("通过/失败", class_="sortable result initial-sort", col="result"),
+            html.th("检查", class_="sortable", col="name"),
+            html.th("耗时", class_="sortable", col="duration"),
             html.th("Links", class_="sortable links", col="links"),
         ]
         session.config.hook.pytest_html_results_table_header(cells=cells)
 
         results = [
-            html.h2("Results"),
+            html.h2("结果"),
             html.table(
                 [
                     html.thead(
@@ -160,7 +160,7 @@ class HTMLReport:
                         html.tr(
                             [
                                 html.th(
-                                    "No results found. Try to check the filters",
+                                    "无结果",
                                     colspan=len(cells),
                                 )
                             ],
@@ -182,8 +182,8 @@ class HTMLReport:
             html.script(raw(main_js)),
             html.h1(self.title),
             html.p(
-                "Report generated on {} at {} by ".format(
-                    generated.strftime("%d-%b-%Y"), generated.strftime("%H:%M:%S")
+                "报告生成时间: {} 工具地址: ".format(
+                    generated.strftime("%Y-%m-%d %H:%M:%S")
                 ),
                 html.a("pytest-html", href=__pypi_url__),
                 f" v{__version__}",
@@ -197,7 +197,7 @@ class HTMLReport:
         session.config.hook.pytest_html_results_summary(
             prefix=summary_prefix, summary=summary, postfix=summary_postfix
         )
-        body.extend([html.h2("Summary")] + summary_prefix + summary + summary_postfix)
+        body.extend([html.h2("概要")] + summary_prefix + summary + summary_postfix)
 
         body.extend(results)
 
@@ -214,7 +214,7 @@ class HTMLReport:
             return []
 
         metadata = config._metadata
-        environment = [html.h2("Environment")]
+        environment = [html.h2("环境")]
         rows = []
 
         keys = [k for k in metadata.keys()]

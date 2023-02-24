@@ -32,6 +32,16 @@ class TestResult:
         self.config = config
         self.row_table = self.row_extra = None
 
+        outcome2label = {
+            "Passed" : "通过",
+            "Skipped": "跳过",
+            "Failed" : "失败",
+            "Error"  : "错误",
+            "XFailed": "预期失败",
+            "XPassed": "预期通过"
+        }
+        self.label = outcome2label[outcome]
+
         test_index = hasattr(report, "rerun") and report.rerun + 1 or 0
 
         for extra_index, extra in enumerate(getattr(report, "extra", [])):
@@ -45,7 +55,7 @@ class TestResult:
         )
 
         cells = [
-            html.td(self.outcome, class_="col-result"),
+            html.td(self.label, class_="col-result"),
             html.td(self.test_id, class_="col-name"),
             html.td(self.formatted_time, class_="col-duration"),
             html.td(self.links_html, class_="col-links"),

@@ -82,8 +82,8 @@ function addCollapse() {
     // Add links for show/hide all
     const resulttable = find('table#results-table');
     const showhideall = document.createElement('p');
-    showhideall.innerHTML = '<a href="javascript:showAllExtras()">Show all details</a> / ' +
-                            '<a href="javascript:hideAllExtras()">Hide all details</a>';
+    showhideall.innerHTML = '<a href="javascript:showAllExtras()">显示详情</a> / ' +
+                            '<a href="javascript:hideAllExtras()">隐藏详情</a>';
     resulttable.parentElement.insertBefore(showhideall, resulttable);
 
     // Add show/hide link to each result
