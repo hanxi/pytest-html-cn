@@ -88,7 +88,7 @@ function addCollapse() {
 
     // Add show/hide link to each result
     findAll('.col-result').forEach(function(elem) {
-        const collapsed = getQueryParameter('collapsed') || 'Passed';
+        const collapsed = getQueryParameter('collapsed') || '通过,跳过';
         const extras = elem.parentNode.nextElementSibling;
         const expandcollapse = document.createElement('span');
         if (extras.classList.contains('collapsed')) {
