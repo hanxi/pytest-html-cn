@@ -120,9 +120,9 @@ class HTMLReport:
             Outcome("passed", self.passed, label="通过"),
             Outcome("skipped", self.skipped, label="跳过"),
             Outcome("failed", self.failed, label="失败"),
-            Outcome("error", self.errors, label="错误"),
-            Outcome("xfailed", self.xfailed, label="预期失败"),
-            Outcome("xpassed", self.xpassed, label="预期通过"),
+            #Outcome("error", self.errors, label="错误"),
+            #Outcome("xfailed", self.xfailed, label="预期失败"),
+            #Outcome("xpassed", self.xpassed, label="预期通过"),
         ]
 
         if self.rerun is not None:
