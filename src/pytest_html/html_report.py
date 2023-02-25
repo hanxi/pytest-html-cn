@@ -180,13 +180,14 @@ class HTMLReport:
 
         body = html.body(
             html.script(raw(main_js)),
-            html.h1(self.title),
+            html.h1(self.title, align = 'center'),
             html.p(
                 "报告生成时间: {} 工具地址: ".format(
                     generated.strftime("%Y-%m-%d %H:%M:%S")
                 ),
                 html.a("pytest-html", href=__pypi_url__),
                 f" v{__version__}",
+                align = 'center'
             ),
             onLoad="init()",
         )
